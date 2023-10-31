@@ -19,6 +19,16 @@ class SchedulingController extends DB{
         })
     }
 
+    reservar(id_cliente, id_agenda){
+        let sql = 'UPDATE agenda_pet_shop SET fk_id_cliente = ? WHERE id_agenda = ?'
+        let params = [id_cliente, id_agenda]
+
+        return this.query(sql, params).then(rows => {
+            console.log(rows)
+            return (rows.length > 0)
+        })
+    }
+
     
 }
 
