@@ -4,14 +4,14 @@ const DB = require('../models/db');
 const SchedulingController = require('../controllers/scheduling-controller');
 const CustomError = require('../models/custom-error');
 
-router.get('/consultar/:data&hora', async (request, response) => {
+router.get('/consultar', async (request, response) => {
         let agenda ={
-          data: request.body.data,
-          hora: request.body.hora
+          data: request.query.data,
+          hora: request.query.hora,
         };
         const conn = await DB.connect();
-        const userController = new SchedulingController(conn);
-        let consulta = await SchedulingController.agenda(data, hora);
+        const schedulingController = new SchedulingController(conn);
+        let consulta = await schedulingController.consultar(agenda.data, agenda.hora);
 
 
   response.send({
