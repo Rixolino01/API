@@ -1,0 +1,10 @@
+As conexões da API estão no arquivo index.js
+
+elas serão orientadas para a pasta routes, onde é indicado o caminho para a pasta contrllers
+
+a Pasta controllers é responsavál por realizar a alterações no BD
+
+Então:
+index.js => portas de entrada
+routes => acesso a operação para o BD
+controllers => arquivos onde são altrerados os arquivos no BD
