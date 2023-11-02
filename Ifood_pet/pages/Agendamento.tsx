@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, DatePickerIOS, Picker, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 
 const Agendamento: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -7,14 +8,18 @@ const Agendamento: React.FC = () => {
   const [selectedEstabelecimento, setSelectedEstabelecimento] = useState('Estabelecimento A');
   const estabelecimentos = ['Estabelecimento A', 'Estabelecimento B', 'Estabelecimento C'];
 
+  function handleAgendamento() {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Agendamento</Text>
-      <DatePickerIOS
+      <DatePicker
         date={selectedDate}
         onDateChange={newDate => setSelectedDate(newDate)}
       />
-      <Picker
+      {/* <Picker
         selectedValue={selectedTime}
         onValueChange={(itemValue, itemIndex) => setSelectedTime(itemValue)}
       >
@@ -33,7 +38,7 @@ const Agendamento: React.FC = () => {
         {estabelecimentos.map(estabelecimento => (
           <Picker.Item label={estabelecimento} value={estabelecimento} key={estabelecimento} />
         ))}
-      </Picker>
+      </Picker> */}
       <Button title="Agendar" onPress={() => handleAgendamento()} />
     </View>
   );
