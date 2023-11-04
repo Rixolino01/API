@@ -49,6 +49,7 @@ export default function Login({navigation}) {
       <Button size='md' radius={20} onPress={logar} title='Acessar' />
       <Text style={styles.alert}>{resultado}</Text>
       <StatusBar style="auto" />
+      <Button size='md' radius={20} title='Novo Cadastro' onPress={() => navigation.navigate('Cadastro_cliente')} />
     </View>
   );
 }
