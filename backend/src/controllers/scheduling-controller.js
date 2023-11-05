@@ -28,11 +28,10 @@ class SchedulingController extends DB{
             return (rows.length > 0)
         })
     }
-    consultar_data(data){
-        let sql = 'SELECT * FROM v_disponivel WHERE dia_mes = ?'
+    consultar_hora(data){
+        let sql = 'SELECT DISTINCT horario FROM `v_disponivel` WHERE dia_mes = ? ORDER BY horario'
         let params = [data]
-
-        console.log(data,)
+        console.log(data)
 
         return this.query(sql, params).then(rows => {
             console.log(rows)
