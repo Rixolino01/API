@@ -26,7 +26,8 @@ class UserController extends DB{
         let telefone = user.telefone;
         let bairro = user.bairro;
         let cidade = user.cidade;
-        let logradouro = user.logradouro;
+        let rua = user.rua;
+        let numero = user.numero;
         let cep = user.cep;
 
         if(
@@ -38,7 +39,7 @@ class UserController extends DB{
             throw new CustomError('Verifique os campos obrigatórios!', 400);
 
         let sql = `
-            INSERT INTO cliente (nome, email, senha, telefone, bairro, cidade, logradouro, cep) VALUES (?,?,?,?,?,?,?,?)
+            INSERT INTO cliente (nome, email, senha, telefone, bairro, cidade, rua, numero, cep) VALUES (?,?,?,?,?,?,?,?,?)
         `;
         let params = [
             nome,
@@ -47,7 +48,8 @@ class UserController extends DB{
             telefone,
             bairro,
             cidade,
-            logradouro,
+            rua,
+            numero,
             cep
         ];
 
