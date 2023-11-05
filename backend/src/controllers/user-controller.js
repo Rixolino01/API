@@ -9,7 +9,7 @@ class UserController extends DB{
     }
 
     login(email, senha){
-        let sql = 'SELECT * FROM usuarios WHERE email = ? AND senha = ?';
+        let sql = 'SELECT * FROM cliente WHERE email = ? AND senha = ?';
         let params = [email, sha256(senha)];
         
         return this.query(sql, params).then(rows => {
@@ -38,7 +38,7 @@ class UserController extends DB{
             throw new CustomError('Verifique os campos obrigatórios!', 400);
 
         let sql = `
-            INSERT INTO usuarios (nome, email, senha, telefone, bairro, cidade, logradouro, cep) VALUES (?,?,?,?,?,?,?,?)
+            INSERT INTO cliente (nome, email, senha, telefone, bairro, cidade, logradouro, cep) VALUES (?,?,?,?,?,?,?,?)
         `;
         let params = [
             nome,

@@ -28,6 +28,17 @@ class SchedulingController extends DB{
             return (rows.length > 0)
         })
     }
+    consultar_data(data){
+        let sql = 'SELECT * FROM v_disponivel WHERE dia_mes = ?'
+        let params = [data]
+
+        console.log(data,)
+
+        return this.query(sql, params).then(rows => {
+            console.log(rows)
+            return (rows.length > 0);
+        })
+    }
 
     
 }

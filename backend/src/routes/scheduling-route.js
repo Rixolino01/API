@@ -4,6 +4,7 @@ const DB = require('../models/db');
 const SchedulingController = require('../controllers/scheduling-controller');
 const CustomError = require('../models/custom-error');
 
+
 // essa parte deve listar todos os horários disponiveis a partir de data e hora
 router.get('/consultar', async (request, response) => {
         let agenda ={
