@@ -1,45 +1,68 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import RNPickerSelect from 'react-native-picker-select';
+import axios from 'axios';
 
 const Agendamento: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
-  const [selectedEstabelecimento, setSelectedEstabelecimento] = useState('Estabelecimento A');
-  const estabelecimentos = ['Estabelecimento A', 'Estabelecimento B', 'Estabelecimento C'];
+  const [timeOptions, setTimeOptions] = useState([]);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  useEffect(() => {
+    axios.get('http://localhost/phpmyadmin/index.php?route=/database/structure&db=pet_shop')
+      .then(response => {
+        setTimeOptions(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar os horários:', error);
+      });
+  }, []);
 
   function handleAgendamento() {
-    throw new Error('Function not implemented.');
+    const formattedDate = selectedDate.toDateString();
+    const agendamentoInfo = {
+      date: formattedDate,
+      time: selectedTime,
+    };
+
+    Alert.alert('Agendamento Confirmado', JSON.stringify(agendamentoInfo));
   }
+
+  const onDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setSelectedDate(selectedDate);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Agendamento</Text>
-      <DatePicker
-        date={selectedDate}
-        onDateChange={newDate => setSelectedDate(newDate)}
+      <TouchableOpacity style={styles.button} onPress={() => setShowDatePicker(true)}>
+        <Text style={styles.buttonText}>Selecionar Data</Text>
+      </TouchableOpacity>
+      {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          is24Hour={true}
+          display="default"
+          onChange={onDateChange}
+        />
+      )}
+      <RNPickerSelect
+        value={selectedTime}
+        onValueChange={value => setSelectedTime(value)}
+        items={timeOptions.map(option => ({
+          label: option.timeLabel,
+          value: option.timeValue,
+        }))}
       />
-      {/* <Picker
-        selectedValue={selectedTime}
-        onValueChange={(itemValue, itemIndex) => setSelectedTime(itemValue)}
-      >
-        <Picker.Item label="Selecione um horário" value="" />
-        <Picker.Item label="9:00 AM" value="9:00 AM" />
-        <Picker.Item label="10:00 AM" value="10:00 AM" />
-        <Picker.Item label="11:00 AM" value="11:00 AM" />
-        <Picker.Item label="2:00 PM" value="2:00 PM" />
-        <Picker.Item label="3:00 PM" value="3:00 PM" />
-        <Picker.Item label="4:00 PM" value="4:00 PM" />
-      </Picker>
-      <Picker
-        selectedValue={selectedEstabelecimento}
-        onValueChange={(itemValue, itemIndex) => setSelectedEstabelecimento(itemValue)}
-      >
-        {estabelecimentos.map(estabelecimento => (
-          <Picker.Item label={estabelecimento} value={estabelecimento} key={estabelecimento} />
-        ))}
-      </Picker> */}
-      <Button title="Agendar" onPress={() => handleAgendamento()} />
+      <TouchableOpacity style={[styles.button, { marginTop: 10 }]} onPress={() => handleAgendamento()}>
+        <Text style={styles.buttonText}>Agendar</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -55,6 +78,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+  },
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 20,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
   },
 });
 
