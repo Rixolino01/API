@@ -19,7 +19,7 @@ const Cadastro_pet = () => {
     console.log(`Nome: ${nome}, Raça: ${raca ? raca : 'Nenhuma selecionada'}, Tipo: ${tipo ? tipo : 'Nenhum selecionado'}`);
 
     if (nome && tipo && raca) {
-      fetch('NOSSA API', {
+      fetch('NOSSA API AQUI', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
