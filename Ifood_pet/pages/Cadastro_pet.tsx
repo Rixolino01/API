@@ -20,7 +20,7 @@ const Cadastro_pet = () => {
 
     
     if (nome && tipo && raca) {
-      fetch('https://api.exemplo.com/salvar_dados', {
+      fetch('NOSSA API', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
