@@ -6,6 +6,8 @@ import { Text, Button, Input } from '@rneui/themed'
 import * as SecureStore from 'expo-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { Icon } from "react-native-elements";
+
 export default function Login({navigation}) {
   const [resultado, setResultado] = useState('Digite seus dados')
   const [login, setLogin] = useState('')
@@ -46,10 +48,35 @@ export default function Login({navigation}) {
       <Text>Senha</Text>
       <Input onChangeText={setSenha}
       secureTextEntry={true} />
-      <Button size='md' radius={20} onPress={logar} title='Acessar' />
+      <Button size='md' 
+      radius={20} 
+      onPress={logar} 
+      title='Acessar' 
+      icon={
+        <Icon
+          name='sign-in'
+          type='font-awesome'
+          color='black'
+        />
+      }
+      titleStyle={styles.buttonText}
+      iconRight
+    />
       <Text style={styles.alert}>{resultado}</Text>
       <StatusBar style="auto" />
-      <Button size='md' radius={20} title='Novo Cadastro' onPress={() => navigation.navigate('Cadastro_cliente')} />
+      <Button size='md' radius={20} 
+      title='Novo Cadastro' 
+      onPress={() => navigation.navigate('Cadastro_cliente')} 
+      icon={
+        <Icon
+          name='user-plus'
+          type='font-awesome'
+          color='black'
+        />
+      }
+      titleStyle={styles.buttonText}
+      iconRight
+    />
     </View>
   );
 }
@@ -68,5 +95,8 @@ const styles = StyleSheet.create({
   img:{
     width: 250,
     height: 250
-  }
+  },
+  buttonText: {
+    marginRight: 20,
+  },
 });
