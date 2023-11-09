@@ -1,20 +1,59 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import ModalSelector from 'react-native-modal-selector';
 
 const Cadastro_pet = () => {
   const [nome, setNome] = useState('');
-  const [raca, setRaca] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
+  const [tipo, setTipo] = useState(null);
+  const [raca, setRaca] = useState(null);
+
+  const tiposAnimais = [
+    { key: 1, label: 'Cachorro', value: 'cachorro', racas: ['Golden Retriever', 'Labrador', 'Poodle', 'SRD'] },
+    { key: 2, label: 'Gato', value: 'gato', racas: ['Siamês', 'Persa', 'Maine Coon', 'SRD'] },
+    { key: 3, label: 'Roedor', value: 'roedor', racas: ['Hamster', 'Coelho', 'Porquinho-da-Índia', 'SRD'] },
+  ];
+
+  const [racasDisponiveis, setRacasDisponiveis] = useState([]);
 
   const salvarDados = () => {
+    console.log(`Nome: ${nome}, Raça: ${raca ? raca.label : 'Nenhuma selecionada'}, Tipo: ${tipo ? tipo.label : 'Nenhum selecionado'}`);
+
     
-    console.log(`Nome: ${nome}, Raça: ${raca}, Data de Nascimento: ${dataNascimento}`);
+    if (nome && tipo && raca) {
+      fetch('NOSSA API', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome: nome,
+          tipo: tipo.label,
+          raca: raca.label,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Dados salvos com sucesso!', data);
+          
+        })
+        .catch(error => {
+          console.error('Erro ao salvar dados:', error);
+          
+        });
+    }
   };
 
   const limparCampos = () => {
     setNome('');
-    setRaca('');
-    setDataNascimento('');
+    setTipo(null);
+    setRaca(null);
+    setRacasDisponiveis([]);
+  };
+
+  const handleTipoChange = (tipoSelecionado) => {
+    setTipo(tipoSelecionado);
+    setRacasDisponiveis(tipoSelecionado.racas || []);
+    setRaca(null); 
   };
 
   return (
@@ -26,19 +65,18 @@ const Cadastro_pet = () => {
         onChangeText={(text) => setNome(text)}
         placeholder="Digite o nome"
       />
-      <Text style={styles.label}>Raça:</Text>
-      <TextInput
-        style={styles.input}
-        value={raca}
-        onChangeText={(text) => setRaca(text)}
-        placeholder="Digite a raça"
+      <Text style={styles.label}>Tipo:</Text>
+      <ModalSelector
+        data={tiposAnimais}
+        initValue="Selecione o tipo"
+        onChange={(option) => handleTipoChange(option)}
       />
-      <Text style={styles.label}>Data de Nascimento:</Text>
-      <TextInput
-        style={styles.input}
-        value={dataNascimento}
-        onChangeText={(text) => setDataNascimento(text)}
-        placeholder="Digite a data de nascimento"
+      <Text style={styles.label}>Raça:</Text>
+      <ModalSelector
+        data={racasDisponiveis.map((raca) => ({ key: raca, label: raca, value: raca }))}
+        initValue="Selecione a raça"
+        onChange={(option) => setRaca(option)}
+        disabled={!tipo} 
       />
       <View style={styles.buttonGroup}>
         <Button title="Cancelar" onPress={limparCampos} />
