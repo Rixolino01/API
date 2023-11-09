@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
 
-const Agendamento: React.FC = () => {
+const Agendamento  = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
   const [timeOptions, setTimeOptions] = useState([]);
