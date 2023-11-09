@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { Button, Icon, Image } from "react-native-elements";
  
 const Cadastro_pet = () => {
   const [nome, setNome] = useState('');
@@ -58,6 +59,10 @@ const Cadastro_pet = () => {
  
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Novo Cadastro</Text>
+      <View style={styles.imageContainer}>
+        <Image style={styles.img} source={require('./src/img/logo01-removebg-preview.png')}/>
+      </View>
       <Text style={styles.label}>Nome:</Text>
       <TextInput
         style={styles.input}
@@ -65,9 +70,10 @@ const Cadastro_pet = () => {
         onChangeText={(text) => setNome(text)}
         placeholder="Digite o nome"
       />
-      <Text style={styles.label}>Tipo:</Text>
+      <Text style={styles.label}>Tipo:</Text >
       <RNPickerSelect
-        placeholder={{ label: 'Selecione o tipo', value: null }}
+        placeholder={{ label: 'Selecione o tipo', value: null}}
+        
         items={tiposAnimais}
         onValueChange={(value) => handleTipoChange(value)}
       />
@@ -80,13 +86,39 @@ const Cadastro_pet = () => {
  
       />
       <View style={styles.buttonGroup}>
-        <Button title="Cancelar" onPress={limparCampos} />
-        <Button title="Salvar" onPress={salvarDados} />
+        <Button
+          title="Cancelar"
+          onPress={limparCampos}
+          icon={
+            <Icon
+              name='close'
+              type='font-AntDesign'
+              color='black'
+            />
+          }
+          iconRight
+          buttonStyle={styles.cancelButton}
+          titleStyle={styles.buttonText}
+        />
+        <Button
+          title="Salvar"
+          onPress={salvarDados}
+          icon={
+            <Icon
+              name='save'
+              type='font-awesome'
+              color='black'
+            />
+          }
+          iconRight
+          buttonStyle={styles.saveButton}
+          titleStyle={styles.buttonText}
+        />
       </View>
     </View>
   );
 };
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -95,6 +127,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
+     fontSize: 18 ,
+     marginTop:20,
   },
   input: {
     height: 40,
@@ -102,13 +136,38 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
+    marginTop:20,
     paddingHorizontal: 10,
   },
   buttonGroup: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  cancelButton: {
+    //backgroundColor: '#FF0000',
+    borderRadius: 20, 
+  },
+  saveButton: {
+    //backgroundColor: '#2ECC71',
+    borderRadius: 20, 
+  },
+  buttonText: {
+    marginRight: 20,
+  },
+  imageContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  img: {
+    width: 100,
+    height: 100,
   },
 });
- 
+
 export default Cadastro_pet;
  
