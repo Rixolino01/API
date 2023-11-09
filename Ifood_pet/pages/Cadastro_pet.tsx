@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import ModalSelector from 'react-native-modal-selector';
+import RNPickerSelect from 'react-native-picker-select';
 
 const Cadastro_pet = () => {
   const [nome, setNome] = useState('');
@@ -8,17 +8,16 @@ const Cadastro_pet = () => {
   const [raca, setRaca] = useState(null);
 
   const tiposAnimais = [
-    { key: 1, label: 'Cachorro', value: 'cachorro', racas: ['Golden Retriever', 'Labrador', 'Poodle', 'SRD'] },
-    { key: 2, label: 'Gato', value: 'gato', racas: ['Siamês', 'Persa', 'Maine Coon', 'SRD'] },
-    { key: 3, label: 'Roedor', value: 'roedor', racas: ['Hamster', 'Coelho', 'Porquinho-da-Índia', 'SRD'] },
+    { label: 'Cachorro', value: 'cachorro', racas: ['Golden Retriever', 'Labrador', 'Poodle', 'SRD'] },
+    { label: 'Gato', value: 'gato', racas: ['Siamês', 'Persa', 'Maine Coon','SRD'] },
+    { label: 'Roedor', value: 'roedor', racas: ['Hamster', 'Coelho', 'Porquinho-da-Índia','SRD'] },
   ];
 
   const [racasDisponiveis, setRacasDisponiveis] = useState([]);
 
   const salvarDados = () => {
-    console.log(`Nome: ${nome}, Raça: ${raca ? raca.label : 'Nenhuma selecionada'}, Tipo: ${tipo ? tipo.label : 'Nenhum selecionado'}`);
+    console.log(`Nome: ${nome}, Raça: ${raca ? raca : 'Nenhuma selecionada'}, Tipo: ${tipo ? tipo : 'Nenhum selecionado'}`);
 
-    
     if (nome && tipo && raca) {
       fetch('NOSSA API', {
         method: 'POST',
@@ -27,8 +26,8 @@ const Cadastro_pet = () => {
         },
         body: JSON.stringify({
           nome: nome,
-          tipo: tipo.label,
-          raca: raca.label,
+          tipo: tipo,
+          raca: raca,
         }),
       })
         .then(response => response.json())
@@ -55,6 +54,7 @@ const Cadastro_pet = () => {
     setRacasDisponiveis(tipoSelecionado.racas || []);
     setRaca(null); 
   };
+  
 
   return (
     <View style={styles.container}>
@@ -66,17 +66,18 @@ const Cadastro_pet = () => {
         placeholder="Digite o nome"
       />
       <Text style={styles.label}>Tipo:</Text>
-      <ModalSelector
-        data={tiposAnimais}
-        initValue="Selecione o tipo"
-        onChange={(option) => handleTipoChange(option)}
+      <RNPickerSelect
+        placeholder={{ label: 'Selecione o tipo', value: null }}
+        items={tiposAnimais}
+        onValueChange={(value) => handleTipoChange(value)}
       />
       <Text style={styles.label}>Raça:</Text>
-      <ModalSelector
-        data={racasDisponiveis.map((raca) => ({ key: raca, label: raca, value: raca }))}
-        initValue="Selecione a raça"
-        onChange={(option) => setRaca(option)}
-        disabled={!tipo} 
+      <RNPickerSelect
+       placeholder={{ label: 'Selecione a raça', value: null }}
+      items={racasDisponiveis.map((raca) => ({ label: raca, value: raca }))}
+      onValueChange={(value) => setRaca(value)}
+      disabled={!tipo} 
+
       />
       <View style={styles.buttonGroup}>
         <Button title="Cancelar" onPress={limparCampos} />
