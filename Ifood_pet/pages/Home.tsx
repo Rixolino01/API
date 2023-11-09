@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 10,
+    
   },
   sairButton: {
     marginTop: 20,
