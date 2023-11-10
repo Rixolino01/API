@@ -2,8 +2,8 @@ const DB = require('../models/db');
 
 class ProductController extends DB{
 
-    constructor(){
-        super(conn);
+    constructor(conn, db_type="mysql"){
+        super(conn, db_type);
     }
 
     

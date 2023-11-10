@@ -6,8 +6,8 @@ const CustomError = require('../models/custom-error');
 
 router.post('/login', async (request, response) => {
     let { email, senha } = request.body;
-    const conn = await DB.connect();
-    const userController = new UserController(conn);
+    const conn = await DB.connect("pg");
+    const userController = new UserController(conn, "pg");
     let logged = await userController.login(email, senha);
 
     response.send({
@@ -18,8 +18,8 @@ router.post('/login', async (request, response) => {
 });
 
 router.post('/register', async (request, response) => {
-    const conn = await DB.connect();
-    const userController = new UserController(conn);
+    const conn = await DB.connect("pg");
+    const userController = new UserController(conn,"pg");
 
     let result = {
         status: 200,
