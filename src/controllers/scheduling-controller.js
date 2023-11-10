@@ -8,7 +8,7 @@ class SchedulingController extends DB{
     }
 
     consultar(data, hora){
-        let sql = 'SELECT * FROM v_disponivel WHERE dia_mes = $1 AND horario = $2'
+        let sql = 'SELECT * FROM agenda_pet_shop WHERE dia_mes = $1 AND horario = $2'
         let params = [data, hora];
 
         return this.query(sql, params).then(result => {
@@ -25,7 +25,7 @@ class SchedulingController extends DB{
         });
     }
     consultar_hora(data){
-        let sql = 'SELECT DISTINCT horario FROM v_disponivel WHERE dia_mes = $1 ORDER BY horario';
+        let sql = 'SELECT DISTINCT horario FROM agenda_pet_shop WHERE dia_mes = $1 ORDER BY horario AND fk_id_cliente IS NULL';
         let params = [data];
 
         return this.query(sql, params).then(result => {
