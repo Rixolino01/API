@@ -15,7 +15,7 @@ router.get('/consultar', async (request, response) => {
     const schedulingController = new SchedulingController(conn,"pg");
     let consulta = await schedulingController.consultar(agenda.data, agenda.hora);
 
-    conn.conn();
+    conn.end();
 
     response.send({
       status: 200,

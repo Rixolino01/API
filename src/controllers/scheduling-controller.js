@@ -9,9 +9,7 @@ class SchedulingController extends DB{
 
     consultar(data, hora){
         let sql = 'SELECT * FROM v_disponivel WHERE dia_mes = $1 AND horario = $2'
-        let params = [data, hora]
-
-        console.log(data, hora)
+        let params = [data, hora];
 
         return this.query(sql, params).then(result => {
             return ((result?.rows||[]).length > 0);
@@ -31,7 +29,7 @@ class SchedulingController extends DB{
         let params = [data];
 
         return this.query(sql, params).then(result => {
-            return ((result.rows||[]).length > 0);
+            return ((result?.rows||[]).length > 0);
         })
     }
 
