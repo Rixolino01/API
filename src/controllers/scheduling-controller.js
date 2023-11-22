@@ -16,6 +16,7 @@ class SchedulingController extends DB{
         })
     }
 
+    //use esse para gerar o agendamento
     reservar(id_cliente, id_agenda){
         let sql = 'UPDATE agenda_pet_shop SET fk_id_cliente = $1 WHERE id_agenda = $2';
         let params = [id_cliente, id_agenda];
@@ -24,8 +25,9 @@ class SchedulingController extends DB{
             return (result != null &&result.rowCount > 0)
         });
     }
+    //essa consulta gera a lista de horas disponiveis
     consultar_hora(data){
-        let sql = 'SELECT DISTINCT horario FROM agenda_pet_shop WHERE dia_mes = $1 ORDER BY horario AND fk_id_cliente IS NULL';
+        let sql = 'SELECT DISTINCT horario FROM agenda_pet_shop WHERE dia_mes = $1 AND fk_id_cliente IS null ORDER BY horario;';
         let params = [data];
 
         return this.query(sql, params).then(result => {
