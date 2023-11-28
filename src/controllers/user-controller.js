@@ -55,6 +55,63 @@ class UserController extends DB{
         return this.query(sql, params).then(result => (result != null &&result.rowCount > 0))
 
     }
+    //id_cliente deve estar salvo no historico e a partir dessa info e realizada a busca no BD
+    register_pet(pet){
+        let id_cliente = pet_cliente;
+        let nome = pet.nome;
+        let tipo = pet.tipo;
+        let raca = pet.raca;
+        let descricao = pet.descricao;
+
+        if(
+            (id_cliente == null || id_cliente.trim() == '')
+
+        )
+            throw new CustomError('Verifique os campos obrigatórios!', 400);
+        
+        let sql = `INSERT INTO pet (nome_raca, nome_pet, fk_id_cliente, descricao, tipo) VALUES ($1, $2, $3, $4, $5)`;
+
+        let params = [
+            raca,
+            nome,
+            id_cliente,
+            descricao,
+            tipo
+        ];
+
+        return this.query(sql, params).then(result => (result != null &&result.rowCount > 0))
+    }
+
+    //recebe o valor nome do cliente de um campo e depois realiza a busca no BD
+    register_pet_nome_cliente(pet_cliente){
+        let nome_cliente = pet_cliente.nome_cliente;
+        let id_cliente = nome_cliente;
+        let nome = pet_cliente.nome;
+        let tipo = pet_cliente.tipo;
+        let raca = pet_cliente.raca;
+        let descricao = pet_cliente.descricao;
+
+        if(
+            (id_cliente == null || id_cliente.trim() == '')
+
+        )
+            nome_cliente = `SELECT id_cliente FROM cliente WHERE nome = $! `;
+            let params1 = [
+                nome_cliente
+            ]
+        
+        let sql = `INSERT INTO pet (nome_raca, nome_pet, fk_id_cliente, descricao, tipo) VALUES ($1, $2, $3, $4, $5)`;
+
+        let params = [
+            raca,
+            nome,
+            id_cliente,
+            descricao,
+            tipo
+        ];
+
+        return this.query(sql, params).then(result => (result != null &&result.rowCount > 0))
+    }
 }
 
 module.exports = UserController;

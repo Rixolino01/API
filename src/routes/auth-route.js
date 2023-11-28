@@ -43,5 +43,58 @@ router.post('/register', async (request, response) => {
     response.send(result);
 });
 
+//Essa é a rota para cadastrar o pet a partir do id_cliente
+router.post('/register_pet', async (request, response) => {
+    const conn = await DB.connect("pg");
+    const userController = new UserController(conn,"pg");
+
+    let result = {
+        status: 200,
+        data: null,
+        message: null
+    };
+
+    try{
+        let registered = await userController.register(request.body);
+        result.data = registered;
+
+    }catch(error){
+
+        if(error instanceof CustomError){
+            result.status = error.code;
+            result.message = error.message;
+        }
+
+    }
+
+    response.send(result);
+});
+
+// essa é a rota para cadastrar pet apartir do nome do cliente
+router.post('/register_pet_nome_cliente', async (request, response) => {
+    const conn = await DB.connect("pg");
+    const userController = new UserController(conn,"pg");
+
+    let result = {
+        status: 200,
+        data: null,
+        message: null
+    };
+
+    try{
+        let registered = await userController.register(request.body);
+        result.data = registered;
+
+    }catch(error){
+
+        if(error instanceof CustomError){
+            result.status = error.code;
+            result.message = error.message;
+        }
+
+    }
+
+    response.send(result);
+});
 
 module.exports = router;
