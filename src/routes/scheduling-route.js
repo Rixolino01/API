@@ -18,15 +18,17 @@ router.get('/consultar', async (request, response) => {
     conn.end();
 
     //quebrando o resultado da busca no BD para ajudar no App
-    const nomePetShop = `${consulta.nome_fantasia}, ${consulta.id_agenda}`;
-    const enderecoPetShop = `${consulta.rua}, ${consulta.numero}, ${consulta.bairro}, ${consulta.cidade}`;
+    //const nomePetShop = `${consulta.nome_fantasia}, ${consulta.id_agenda}`;
+    //const enderecoPetShop = `${consulta.rua}, ${consulta.numero}, ${consulta.bairro}, ${consulta.cidade}`;
 
     response.send({
       status: 200,
-      data: {
-        nome: nomePetShop,
-        endereco: enderecoPetShop
-      },
+      data: consulta.map(petshop => {
+        return {
+         petshop: `${petshop.nome_fantasia}, ${petshop.id_agenda}`,
+         endereço: `${petshop.rua},${petshop.numero},${petshop.bairro},${petshop.cidade}`
+          };
+        }),
       message: "Lista atualizada"
     });
 
