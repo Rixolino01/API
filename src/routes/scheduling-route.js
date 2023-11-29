@@ -23,7 +23,7 @@ router.get('/consultar', async (request, response) => {
 
     response.send({
       status: 200,
-      data: nomePetShop, enderecoPetShop,
+      data: consulta,
       //data: enderecoPetShop,
       message: "Lista atualizada"
     });
