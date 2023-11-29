@@ -13,7 +13,7 @@ class UserController extends DB{
         let params = [email, sha256(senha)];
         
         return this.query(sql, params).then(result => {
-            return ((result?.rows||[]).length > 0);
+            return (result?.rows||[]);
         })
     }
 
@@ -57,7 +57,7 @@ class UserController extends DB{
     }
     //id_cliente deve estar salvo no historico e a partir dessa info e realizada a busca no BD
     register_pet(pet){
-        let id_cliente = pet_cliente;
+        let id_cliente = pet.id_cliente;
         let nome = pet.nome;
         let tipo = pet.tipo;
         let raca = pet.raca;
@@ -80,6 +80,15 @@ class UserController extends DB{
         ];
 
         return this.query(sql, params).then(result => (result != null &&result.rowCount > 0))
+    }
+
+    consulta_cliente(){
+        console.log('oii')
+        const query = `SELECT * FROM cliente`
+
+        return this.query(query).then(result => {
+            return (result?.rows||[])
+        })
     }
 
     //recebe o valor nome do cliente de um campo e depois realiza a busca no BD

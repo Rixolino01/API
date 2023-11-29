@@ -15,7 +15,6 @@ class DB{
     }
 
     static async connect(db_type=DB_TYPES.MYSQL){
-        
         let conn = null;
         try{
             if(db_type == DB_TYPES.POSTGRESQL){

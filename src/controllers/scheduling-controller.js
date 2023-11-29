@@ -12,7 +12,7 @@ class SchedulingController extends DB{
         let params = [data, hora];
 
         return this.query(sql, params).then(result => {
-            return ((result?.rows||[]).length > 0);
+            return (result?.rows||[]);
         })
     }
 
@@ -31,7 +31,7 @@ class SchedulingController extends DB{
         let params = [data];
 
         return this.query(sql, params).then(result => {
-            return ((result?.rows||[]).length > 0);
+            return (result?.rows||[]);
         })
     }
 
