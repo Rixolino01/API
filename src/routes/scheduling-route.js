@@ -23,10 +23,14 @@ router.get('/consultar', async (request, response) => {
 
     response.send({
       status: 200,
-      nomePetShop,
-      enderecoPetShop,
+      data: {
+        nome: nomePetShop,
+        endereco: enderecoPetShop
+      },
       message: "Lista atualizada"
     });
+
+
 });
 // esse será a operação de agendar um horário, devemos receber um json contendo Id_cliente e id_agenda e alterar a agenda_pet_shop
 router.post('/reservar', async (request, response) => {
