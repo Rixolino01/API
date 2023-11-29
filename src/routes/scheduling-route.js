@@ -49,8 +49,8 @@ router.get('/consultar_hora', async (request, response) => {
   const schedulingController = new SchedulingController(conn,"pg");
   let consulta = await schedulingController.consultar_hora(horario.data);
   conn.end();
-
-  response.send(consulta);
+  const valoresHorario = consulta.map(item => item.horario)
+  response.send(valoresHorario);
 });
 
 module.exports = router;
