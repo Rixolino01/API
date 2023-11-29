@@ -50,11 +50,7 @@ router.get('/consultar_hora', async (request, response) => {
   let consulta = await schedulingController.consultar_hora(horario.data);
   conn.end();
 
-  response.send({
-    status: 200,
-    data: consulta,
-    message: "Lista de horas"
-  });
+  response.send(consulta);
 });
 
 module.exports = router;
