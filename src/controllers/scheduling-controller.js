@@ -8,7 +8,7 @@ class SchedulingController extends DB{
     }
 
     consultar(data, hora){
-        let sql = 'SELECT id_agenda, fk_id_cnpj FROM agenda_pet_shop WHERE dia_mes = $1 AND horario = $2'
+        let sql = 'SELECT a.id_agenda, p.nome_fantasia FROM agenda_pet_shop a INNER JOIN pet_shop p ON a.fk_id_cnpj = p.cnpj WHERE dia_mes = $1 AND horario = $2'
         let params = [data, hora];
 
         return this.query(sql, params).then(result => {
