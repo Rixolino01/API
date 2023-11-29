@@ -15,11 +15,15 @@ router.get('/consultar', async (request, response) => {
     const schedulingController = new SchedulingController(conn,"pg");
     let consulta = await schedulingController.consultar(agenda.data, agenda.hora);
 
+    const nomePetShop = `${consulta.nome_fantasia}, ${consulta.id_agenda}`
+    const enderecoPetShop = `${consulta.rua}, ${consulta.numero}, ${consulta.bairro}, ${consulta.cidade}`
+
     conn.end();
 
     response.send({
       status: 200,
-      data: consulta,
+      data: nomePetShop,
+      data: enderecoPetShop,
       message: "Lista atualizada"
     });
 });
